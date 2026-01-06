@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DucraMusicIA — Documentation (Pterodactyl + Cloudflare)</title>
+  <style>
+    :root{--bg:#0b1020;--panel:#0f1733;--panel2:#0c142c;--text:#e7eeff;--muted:#a8b3d6;--brand:#7c5cff;--ok:#42ffb2;--warn:#ffd36b;--bad:#ff5c7a;--border:rgba(255,255,255,.09);--shadow:0 20px 60px rgba(0,0,0,.35)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial;color:var(--text);
+      background:radial-gradient(1200px 700px at 15% 10%, rgba(124,92,255,.28), transparent 60%),
+        radial-gradient(900px 500px at 85% 20%, rgba(66,255,178,.16), transparent 55%),
+        radial-gradient(1000px 650px at 50% 90%, rgba(255,92,122,.12), transparent 60%),var(--bg);line-height:1.55}
+    header{padding:54px 18px 18px;max-width:1100px;margin:0 auto}
+    .badge{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:999px;background:rgba(15,23,51,.65);box-shadow:var(--shadow);backdrop-filter:blur(10px);font-size:13px;color:var(--muted)}
+    .badge b{color:var(--text)}
+    h1{margin:14px 0 6px;font-size:36px}
+    .sub{margin:0;color:var(--muted);max-width:850px}
+    .grid{max-width:1100px;margin:22px auto 70px;padding:0 18px;display:grid;grid-template-columns:320px 1fr;gap:18px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    nav{position:sticky;top:16px;align-self:start;background:rgba(15,23,51,.72);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+    nav a{display:block;padding:10px 12px;border-radius:12px;text-decoration:none;color:var(--muted);border:1px solid transparent;transition:.15s ease;font-size:14px}
+    nav a:hover{color:var(--text);background:rgba(124,92,255,.12);border-color:rgba(124,92,255,.28)}
+    main{background:rgba(15,23,51,.65);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+    .sep{height:1px;background:rgba(255,255,255,.07);margin:14px 0}
+    section{padding:12px 0}
+    h2{margin:12px 0 8px;font-size:22px}
+    h3{margin:16px 0 8px;font-size:16px}
+    p,ul{color:var(--muted)}
+    pre{background:linear-gradient(180deg, rgba(10,15,31,.95), rgba(10,15,31,.82));border:1px solid var(--border);border-radius:16px;padding:14px;overflow:auto;color:#e9eeff;margin:10px 0}
+    code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    .callout{border:1px solid var(--border);background:rgba(12,20,44,.72);border-radius:16px;padding:14px;margin:10px 0}
+    .callout.ok{border-color:rgba(66,255,178,.25)}
+    .callout.warn{border-color:rgba(255,211,107,.22)}
+    .callout.bad{border-color:rgba(255,92,122,.22)}
+    .footer{max-width:1100px;margin:0 auto 60px;padding:0 18px;color:rgba(168,179,214,.75);font-size:13px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="badge">🟣 <b>DucraMusicIA</b> — Doc PROD <b>Pterodactyl + Cloudflare Tunnel</b></div>
+  <h1>Documentation</h1>
+  <p class="sub">Installation & déploiement en production : domaine Cloudflare (ex: <code>exemple.ducratif.com</code>) + cloudflared sur le node Pterodactyl. Inclut tests et dépannage.</p>
+</header>
+
+<div class="grid">
+  <nav>
+    <a href="#env">.env</a>
+    <a href="#ptero">Pterodactyl</a>
+    <a href="#dns">Cloudflare DNS</a>
+    <a href="#ingress">Cloudflared ingress</a>
+    <a href="#tests">Tests</a>
+    <a href="#trouble">Dépannage</a>
+    <a href="#hosted">Variante hébergeur Ptero</a>
+  </nav>
+
+  <main>
+    <section id="env">
+      <h2>Configuration .env</h2>
+      <pre><code>WEBHOOK_ENABLED=true
+WEBHOOK_PORT=31009 (ou autre)
+WEBHOOK_PUBLIC_URL=https://exemple.ducratif.com
+WEBHOOK_SECRET=change_me_long_random</code></pre>
+      <div class="callout warn">⚠️ Secret long obligatoire : c’est la “clé” d’accès au webhook.</div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="ptero">
+      <h2>Pterodactyl</h2>
+      <ul>
+        <li>Ajoute une allocation pour <code>31009 (ou autre)</code></li>
+        <li>Le webhook doit écouter sur <code>0.0.0.0</code> dans le container</li>
+        <li>Log attendu : <code>Webhook server listening on :31009</code></li>
+      </ul>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="dns">
+      <h2>Cloudflare DNS</h2>
+      <ul>
+        <li>Type : <b>CNAME</b></li>
+        <li>Name : <code>musicia</code></li>
+        <li>Target : <code>&lt;TUNNEL_UUID&gt;.cfargotunnel.com</code></li>
+        <li>Proxy : ON (nuage orange)</li>
+      </ul>
+      <div class="callout bad">❌ Si tu ne mets pas <code>.cfargotunnel.com</code> → erreur Cloudflare 1016.</div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="ingress">
+      <h2>Cloudflared — ingress</h2>
+      <p>Sur le node : <code>/etc/cloudflared/config.yml</code></p>
+      <h3>1) Trouver l’IP Docker exposée</h3>
+      <pre><code>sudo ss -lntp | grep 31009</code></pre>
+      <p>Si tu vois <code>182.14.0.5:31009</code>, alors :</p>
+      <pre><code>  - hostname: exemple.ducratif.com
+    service: http://182.14.0.5:31009</code></pre>
+      <h3>2) Redémarrer</h3>
+      <pre><code>sudo systemctl restart cloudflared</code></pre>
+      <div class="callout ok">✅ Point clé : ne pointe pas <code>127.0.0.1</code> si ça écoute sur <code>182.14.0.5</code>.</div>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="tests">
+      <h2>Tests</h2>
+      <h3>Local node</h3>
+      <pre><code>curl -i http://182.14.0.5:31009/webhook/musicgpt?secret=TON_SECRET</code></pre>
+      <p>✅ attendu : <b>405 Method Not Allowed</b></p>
+
+      <h3>Via domaine</h3>
+      <pre><code>curl -i https://exemple.ducratif.com/webhook/musicgpt?secret=TON_SECRET</code></pre>
+      <p>✅ attendu : <b>405 Method Not Allowed</b></p>
+
+      <h3>POST (PowerShell)</h3>
+      <pre><code>Invoke-RestMethod -Method POST `
+  -Uri "https://exemple.ducratif.com/webhook/musicgpt?secret=TON_SECRET" `
+  -ContentType "application/json" `
+  -Body '{"conversion_id":"test","task_id":"test","conversion_path":"https://example.com/test.mp3"}'</code></pre>
+      <p>✅ attendu : <code>{"ok":true}</code> + fichier JSON dans <code>dlmusic/webhooks/</code></p>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="trouble">
+      <h2>Dépannage</h2>
+      <h3>502 Bad gateway</h3>
+      <pre><code>sudo journalctl -u cloudflared -n 50 --no-pager</code></pre>
+      <p>Souvent : mauvais origin (<code>127.0.0.1</code> au lieu de <code>182.14.0.5</code>).</p>
+
+      <h3>1016 Origin DNS error</h3>
+      <p>Le CNAME doit viser <code>&lt;UUID&gt;.cfargotunnel.com</code>.</p>
+    </section>
+
+    <div class="sep"></div>
+
+    <section id="hosted">
+      <h2>Variante : hébergeur Ptero (node non accessible)</h2>
+      <div class="callout warn">Si tu ne peux pas éditer <code>/etc/cloudflared/config.yml</code>, tu dois soit demander à l’hébergeur, soit utiliser un webhook externe.</div>
+      <ul>
+        <li>Option A : demander à l’hébergeur d’ajouter hostname → port</li>
+        <li>Option B : webhook externe (VPS/proxy)</li>
+        <li>Option C : désactiver webhook (poll seulement)</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<div class="footer">Developed by Ducratif — DucraMusicIA Docs (Pterodactyl + Cloudflare Tunnel).</div>
+</body>
+</html>

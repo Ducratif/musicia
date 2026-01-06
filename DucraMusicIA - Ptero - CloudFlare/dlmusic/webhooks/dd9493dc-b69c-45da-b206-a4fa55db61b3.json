@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "conversion_type": "Music AI",
+  "task_id": "58d20635-b3c5-4465-9e2f-69a50caa0ca8",
+  "conversion_id": "dd9493dc-b69c-45da-b206-a4fa55db61b3",
+  "conversion_path": "https://lalals.s3.amazonaws.com/conversions/standard/dd9493dc-b69c-45da-b206-a4fa55db61b3/dd9493dc-b69c-45da-b206-a4fa55db61b3.mp3",
+  "conversion_path_wav": "https://lalals.s3.amazonaws.com/conversions/hq/dd9493dc-b69c-45da-b206-a4fa55db61b3/dd9493dc-b69c-45da-b206-a4fa55db61b3.wav",
+  "conversion_duration": 176.84317460317462,
+  "is_flagged": false,
+  "reason": "",
+  "lyrics": "[Verse 1]\nNeon in my eyes, the night won’t let me breathe,\nShadows in the signal, calling out to me.\nI keep moving forward, heartbeat like a drum,\nIf I stop for one second, then I’m already done.\n\n[Chorus]\nDon’t let me go, I’m holding on tonight,\nStatic in the dark, but I will find the light.\nI won’t break, I won’t fade, I won’t be the one they catch,\nI’m running through the storm — and I’m never looking back.",
+  "lyrics_timestamped": "[{\"index\": 0, \"text\": \"[Verse 1]\", \"start\": 35665, \"end\": 36408}, {\"index\": 1, \"text\": \"Neon in my eyes, the night won\\u2019t let me breathe,\", \"start\": 36408, \"end\": 43096}, {\"index\": 2, \"text\": \"Shadows in the signal, calling out to me.\", \"start\": 43839, \"end\": 50526}, {\"index\": 3, \"text\": \"I keep moving forward, heartbeat like a drum,\", \"start\": 50526, \"end\": 55727}, {\"index\": 4, \"text\": \"If I stop for one second, then I\\u2019m already done.\", \"start\": 56470, \"end\": 61672}, {\"index\": 5, \"text\": \"[Chorus]\", \"start\": 62415, \"end\": 63158}, {\"index\": 6, \"text\": \"Don\\u2019t let me go, I\\u2019m holding on tonight,\", \"start\": 63158, \"end\": 68359}, {\"index\": 7, \"text\": \"Static in the dark, but I will find the light.\", \"start\": 68359, \"end\": 75789}, {\"index\": 8, \"text\": \"I won\\u2019t break, I won\\u2019t fade, I won\\u2019t be the one they catch,\", \"start\": 75789, \"end\": 176843}, {\"index\": 9, \"text\": \"I\\u2019m running through the storm \\u2014 and I\\u2019m never looking back.\", \"start\": 195419, \"end\": 176843}]",
+  "title": "80s Darkwave Anthem",
+  "album_cover_path": "https://lalals.s3.amazonaws.com/GenImages/58d20635-b3c5-4465-9e2f-69a50caa0ca8.jpg",
+  "subtype": "music_ai"
+}
