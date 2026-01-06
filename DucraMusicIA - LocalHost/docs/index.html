@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DucraMusicIA — Documentation - LocalHost</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.06);
+      --text: #e7ecff;
+      --muted: rgba(231,236,255,.72);
+      --accent: #7c5cff;
+      --accent2: #27d6ff;
+      --ok: #2ee59d;
+      --warn: #ffcc66;
+      --err: #ff5c7a;
+      --border: rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(39,214,255,.16), transparent 55%),
+        radial-gradient(800px 500px at 50% 100%, rgba(46,229,157,.10), transparent 50%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 18px 80px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      padding: 18px 18px;
+      backdrop-filter: blur(10px);
+    }
+    .title {
+      display:flex; align-items:center; gap:12px;
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: .2px;
+    }
+    .badge {
+      display:inline-flex; gap:8px; align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .muted { color: var(--muted); }
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .kpi {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+    }
+    .kpi b { display:block; font-size: 14px; }
+    .kpi span { color: var(--muted); font-size: 13px; }
+    .nav {
+      margin: 18px 0 0;
+      display:flex; flex-wrap:wrap;
+      gap: 8px;
+    }
+    .nav a {
+      text-decoration:none;
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .nav a:hover { border-color: rgba(255,255,255,.22); transform: translateY(-1px); }
+    h2 {
+      margin: 26px 0 10px;
+      font-size: 20px;
+    }
+    h3 { margin: 18px 0 8px; font-size: 16px; }
+    code, pre {
+      font-family: var(--mono);
+    }
+    pre {
+      margin: 10px 0;
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:auto;
+    }
+    .callout {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+    .ok { border-left: 4px solid var(--ok); }
+    .warn { border-left: 4px solid var(--warn); }
+    .err { border-left: 4px solid var(--err); }
+    .two {
+      display:grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    @media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+    .footer {
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .mono { font-family: var(--mono); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="card">
+        <div class="badge">🟣 Discord Bot • 🎵 MusicGPT/MusicAI • 🧩 Node.js / discord.js v14</div>
+        <h1 class="title"><span class="grad">DucraMusicIA</span> — LocalHost</h1>
+        <p class="muted">
+          Bot Discord qui génère des musiques via <span class="mono">POST /MusicAI</span>, évite les timeouts avec polling,
+          récupère les liens finaux via <b>webhook</b> et sauvegarde automatiquement les fichiers dans <span class="mono">dlmusic/</span>.
+        </p>
+        <div class="nav">
+          <a href="#install">Installation</a>
+          <a href="#env">Configuration .env</a>
+          <a href="#webhook">Webhook + ngrok</a>
+          <a href="#commands">Commandes</a>
+          <a href="#files">Backup dlmusic</a>
+          <a href="#troubleshoot">Dépannage</a>
+        </div>
+
+        <div class="grid">
+          <div class="kpi"><b>Statut</b><span>DND + présence rotative</span></div>
+          <div class="kpi"><b>Accès</b><span>Rôle autorisé (ID)</span></div>
+          <div class="kpi"><b>Résultats</b><span>Webhook + archive JSON</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">⚡ TL;DR</h2>
+        <pre><code>npm install
+cp .env.example .env
+npm start</code></pre>
+        <div class="callout warn">
+          <b>MusicAI :</b> les liens MP3 ne sont pas toujours renvoyés par <span class="mono">/byId</span>.
+          Active le <b>webhook</b> (ngrok ok) pour récupérer l’URL finale.
+        </div>
+        <div class="callout ok">
+          Le bot supprime et réinstalle les slash commands à chaque démarrage → pas de doublons.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="install">🚀 Installation</h2>
+    <div class="card">
+      <pre><code>npm install
+cp .env.example .env
+npm start</code></pre>
+      <div class="callout ok">
+        Au démarrage : login → suppression des commandes du serveur → installation des commandes → présence DND.
+      </div>
+    </div>
+
+    <h2 id="env">🔧 Configuration (.env)</h2>
+    <div class="two">
+      <div class="card">
+        <h3>Obligatoire</h3>
+        <pre><code>DISCORD_TOKEN=xxxxxxxx
+GUILD_ID=123456789012345678
+ALLOWED_ROLE_ID=123456789012345678
+
+MUSICGPT_API_KEY=xxxxxxxx
+MUSICGPT_BASE_URL=https://api.musicgpt.com/api/public/v1</code></pre>
+      </div>
+      <div class="card">
+        <h3>Limites + Backup</h3>
+        <pre><code>MAX_UPLOAD_MB=24
+DOWNLOAD_DIR=dlmusic
+MAX_BACKUP_MB=200
+DEBUG=1</code></pre>
+        <div class="callout warn">
+          <b>MAX_UPLOAD_MB</b> dépend de Discord (25MB standard / 50MB / 100MB si boosts). Garde 1MB de marge.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="webhook">🌐 Webhook + ngrok (recommandé)</h2>
+    <div class="card">
+      <p class="muted">
+        Le webhook sert à récupérer l’URL finale des fichiers (souvent signée) quand l’API de statut ne renvoie que
+        <span class="mono">COMPLETED</span> sans lien.
+      </p>
+
+      <h3>Variables .env</h3>
+      <pre><code>WEBHOOK_PORT=3333
+WEBHOOK_PUBLIC_URL=https://xxxx.ngrok-free.dev
+WEBHOOK_SECRET=ducratif_secret</code></pre>
+
+      <h3>Route exposée</h3>
+      <pre><code>POST /webhook/musicgpt?secret=ducratif_secret</code></pre>
+
+      <div class="callout ok">
+        Les payloads webhook sont archivés automatiquement dans <span class="mono">dlmusic/webhooks/</span>.
+      </div>
+
+      <h3>ngrok sur Windows / Shadow</h3>
+      <pre><code>ngrok http http://127.0.0.1:3333</code></pre>
+
+      <div class="callout warn">
+        Si <span class="mono">https://...ngrok.../</span> affiche "Not found" → normal. Teste plutôt :
+        <span class="mono">/webhook/musicgpt?secret=...</span> (GET renverra "Method not allowed", c'est OK).
+      </div>
+
+      <h3>Test manuel (PowerShell)</h3>
+      <pre><code>iwr -Method POST "https://&lt;ngrok&gt;/webhook/musicgpt?secret=ducratif_secret" `
+  -ContentType "application/json" `
+  -Body '{"conversion_id":"test","task_id":"test","conversion_path":"https://example.com/test.mp3"}'</code></pre>
+    </div>
+
+    <h2 id="commands">🧠 Commandes</h2>
+    <div class="card">
+      <h3>/musicai</h3>
+      <ul>
+        <li>Génère <b>2 versions</b> via MusicAI</li>
+        <li>Polling automatique (évite timeout Discord)</li>
+        <li>URL récupérée via <b>/byId</b> puis fallback via <b>webhook</b></li>
+        <li>Téléchargement + backup dans <span class="mono">dlmusic/</span></li>
+        <li>Attache si taille ≤ <span class="mono">MAX_UPLOAD_MB</span>, sinon lien</li>
+      </ul>
+
+      <h3>/status</h3>
+      <p class="muted">Vérifie le statut d'une conversion via <span class="mono">GET /byId</span>.</p>
+
+      <h3>/voices</h3>
+      <p class="muted">Liste / recherche de voices (selon endpoints disponibles).</p>
+
+      <h3>/about</h3>
+      <p class="muted">Crédits + liens utiles.</p>
+    </div>
+
+    <h2 id="files">📁 Backup dlmusic</h2>
+    <div class="card">
+      <p class="muted">Le bot sauvegarde les fichiers générés dans un dossier local avant envoi Discord.</p>
+      <pre><code>dlmusic/
+  musicai_v1_&lt;id&gt;_2026-01-05T15-20-42-003Z.mp3
+  musicai_v2_&lt;id&gt;_2026-01-05T15-20-42-003Z.mp3
+  webhooks/
+    &lt;conversion_id&gt;.json</code></pre>
+      <div class="callout ok">
+        Idéal si l’URL de téléchargement expire : tu gardes une copie locale.
+      </div>
+    </div>
+
+    <h2 id="troubleshoot">🧯 Dépannage</h2>
+    <div class="card">
+      <div class="callout err">
+        <b>AccessDenied (S3)</b> : certains liens ne sont pas publics → active le webhook pour obtenir une URL valide.
+      </div>
+      <div class="callout warn">
+        <b>ngrok 502 / ERR_NGROK_8012</b> : rien n’écoute sur le port local. Vérifie le log “Webhook server listening…”.
+      </div>
+      <div class="callout warn">
+        <b>Options required</b> : dans les slash commands, les options <span class="mono">required=true</span> doivent être placées avant les non-required.
+      </div>
+      <div class="callout warn">
+        <b>chalk.red is not a function</b> : chalk v5 est ESM → utilise <span class="mono">require('chalk').default</span>.
+      </div>
+      <div class="callout ok">
+        Active <span class="mono">DEBUG=1</span> pour suivre chaque action (polling, webhook, download, backup, upload).
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© Ducratif — DucraMusicIA</div>
+      <div class="mono">Dernière mise à jour : 2026-01-05</div>
+    </div>
+  </div>
+</body>
+</html>

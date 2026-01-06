@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "conversion_type": "Music AI",
+  "image_path": "https://lalals.s3.amazonaws.com/GenImages/58d20635-b3c5-4465-9e2f-69a50caa0ca8.jpg",
+  "thumbnail_path": "https://lalals.s3.amazonaws.com/GenImages/58d20635-b3c5-4465-9e2f-69a50caa0ca8_thumbnail.jpg",
+  "task_id": "58d20635-b3c5-4465-9e2f-69a50caa0ca8",
+  "conversion_id_1": "dd9493dc-b69c-45da-b206-a4fa55db61b3",
+  "conversion_id_2": "9969e761-b2e4-4424-a575-9d55f06e8d88",
+  "album_cover_generator_output": true,
+  "subtype": "album_cover_generation"
+}

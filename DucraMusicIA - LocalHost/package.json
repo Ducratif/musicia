@@ -1,0 +1,19 @@
+{
+  "name": "ducramusicia",
+  "version": "1.0.0",
+  "description": "Discord bot (Node.js) integrating MusicGPT API (musicgpt.com) to generate music, voices, TTS and more.",
+  "author": "Ducratif",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5"
+  }
+}
